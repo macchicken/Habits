@@ -1,0 +1,45 @@
+{
+  "ProjectName": "Habit App",
+  "ProjectGuid": "1d0d152b-0342-4c03-a34b-036cd869a8c3",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.HabitApp",
+  "DisplayName": "Habit App",
+  "Author": "",
+  "Description": "Habit App",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.7.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{13480430-cded-4d65-8126-978e66c17961}",
+  "WP8ProductID": "{25041b1b-4957-4ff0-a98f-7f388030ccbb}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.HabitApp",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ]
+}
