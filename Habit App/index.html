@@ -565,8 +565,9 @@
         function loadallcheckins(habitid){
             app.getCheckInCommnetsp().loadAll(currentUser,habitid,app.getSqliteDb().getDbconnection(),function(data){
                 console.log(data);
+                var dataulcontent=$("#usercheckinrecords").find("ul");
+                dataulcontent.html("");
                 if (data["status"]=="success"){
-                    var dataulcontent=$("#usercheckinrecords").find("ul");
                     var tempcontent=data["content"];
                     if (tempcontent.length==0){
                         dataulcontent.append("<li class='list-group-item list-group-item-danger text-center'>Not a single checkin.</li>");
