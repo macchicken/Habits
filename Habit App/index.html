@@ -209,6 +209,7 @@
     <script type="text/javascript" src="js/habit_extension.js"></script>
     <script type="text/javascript" src="js/business.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="static/js/jquery.timeago.js"></script>
     <script type="text/javascript">
         //index and signup view js
         app.initialize();
@@ -297,8 +298,10 @@
             $("#homeview").css("display","block");
             $("#usercheckinrecords").css("display","none");
         }
+
         //toggle view of habits and new habit
 		function toggleView(param) {
+            tohomeview();
 			if ($("#habits-outter-container").hasClass("col-md-4")) {
 				$("#new-habit-container").fadeOut(500);
 				setTimeout(function() {
@@ -574,11 +577,12 @@
                     }else{
                         for (var i=0;i<tempcontent.length;i++){
                             if (tempcontent[i].CONTENT!==""){
-                                dataulcontent.append("<li class='list-group-item list-group-item-info'>"+tempcontent[i].CONTENT+" "+tempcontent[i].INSERTEDTIME+"</li>");
+                                dataulcontent.append("<li class='list-group-item list-group-item-info'>"+tempcontent[i].CONTENT+"<abbr title='"+tempcontent[i].INSERTEDTIME+"' class='timeago pull-right'></abbr></li>");
                             }else{
-                                dataulcontent.append("<li class='list-group-item list-group-item-warning'>You didn't leave a comment this day.</li>");
+                                dataulcontent.append("<li class='list-group-item list-group-item-warning'>You didn't leave a comment this day.<abbr title='"+tempcontent[i].INSERTEDTIME+"' class='timeago pull-right'></abbr></li>");
                             }
                     	}
+                        $(".timeago").timeago();
                     }
                     $("#homeview").css("display","none");
                     $("#usercheckinrecords").css("display","block");
