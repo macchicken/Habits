@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+        <meta name="author" content="shenjiayu, sjy19930312@gmail.com">
+        <meta name="description" content="...">
+        <title>Anyobjects</title>
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <!-- 或许大概可能也许以后会用得到吧<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+        <link rel="stylesheet" type="text/css" href="static/css/paper.css">
+        <link rel="stylesheet" type="text/css" href="static/css/sweetalert.css">
+        <link href="http://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" rel="stylesheet" type="text/css">
+        <!-- <script src="https://cdn.socket.io/socket.io-1.3.6.js"></script> -->
+        <script type="text/javascript" src="static/js/jquery-2.1.4.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="static/js/sweetalert.min.js"></script>
+        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/twemoji/1.3.2/twemoji.min.js"></script> -->
+    </head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center">Signup</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+				<div class="form">
+					<div class="form-group">
+				    	<input placeholder="Email Address" id="email" type="email" class="form-control">
+				    </div>
+				    <div class="form-group">
+				    	<input placeholder="Username" id="username" type="text" class="form-control">
+				    </div>
+				    <div class="form-group">
+				    	<input placeholder="Password" id="password" type="password" class="form-control">
+				    </div>
+				    <div class="form-group">
+				    	<input placeholder="Confirm Password" id="confirm_password" type="password" class="form-control">
+					</div>
+					<div class="form-group text-center">
+						<a href="javascript:;" class="btn" onclick="register()">Signup</a>
+						<a href="/login">Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="csrf">
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="js/uuid.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript">
+		function register() {
+			var csrf = $("#csrf").val();
+			var username_pattern = /^[\w\u4e00-\u9fa5]{2,20}$/i;
+			var password_pattern = /^\w{6,}$/i;
+			var email = $("#email").val().trim();
+			if (email.length == 0) {
+				swal({title: "warning", text: "Please enter email!", type: "warning"});
+				return;
+			} 
+			var username = $("#username").val().trim();
+			if (username.length == 0) {
+				swal({title: "warning", text: "Please enter your username!", type: "warning"});
+				return;
+			} else if (!username_pattern.test(username)) {
+				swal({title: "warning", text: "Length of username is between 2 and 20!", type: "warning"});
+				return;
+			}
+			var password = $("#password").val().trim();
+			if (password.length == 0) {
+				swal({title: "warning", text: "Please enter your password!", type: "warning"});
+				return;
+			} else if (!password_pattern.test(password)) {
+				swal({title: "warning", text: "Password has at least 6 characters!", type: "warning"});
+				return;
+			}
+			var c_password = $("#confirm_password").val().trim();
+			if (c_password.length == 0) {
+				swal({title: "warning", text: "Please confirm your password!", type: "warning"});
+				return;
+			} else if (password != c_password) {
+				swal({title: "warning", text: "Make sure password and confirm password are same!", type: "warning"});
+				return;
+			}
+			var dataJson = {"email": email, "username": username, "password": password, "csrf": csrf};
+			// $.ajax({
+			// 	url: "/signup",
+			// 	type: "post",
+			// 	dataType:"json",
+			// 	data: dataJson,
+			// 	success: function(ret_val) {
+			// 		if (ret_val["status"] == "success") {
+			// 			window.location.href = "/";
+			// 		} else {
+			// 			if (ret_val["content"] == "UsernameExist") {
+			// 				swal({title: "warning", text: "Username has been taken!", type: "warning"});
+			// 			} else if (ret_val["content"] == "EmailExist") {
+			// 				swal({title: "warning", text: "Email has been taken!", type: "warning"});
+			// 			}
+			// 		}
+			// 	}
+			// });
+            var result=userControl.signup(dataJson);
+            if (result){
+                window.location.href = "home.html";
+            }else{
+                swal({title: "warning", text: "Username or Email has been taken!", type: "warning"});
+            }
+		}
+	</script>
+</body>
+</html>

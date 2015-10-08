@@ -15,36 +15,50 @@
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
  * under the License.
+ * the main functions of the app
  */
+
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+    onDeviceReady: function () {
         navigator.splashscreen.hide();
+        var stl = sqliteDbSingleton.getInstance();
+        var uco=userControl.getInstance();
+        habitsPool.getInstance();
+        friendsPool.getInstance();
+        var cicp=checkinCommnetPool.getInstance();
+        stl.openDb();
+        stl.createTable();
+        uco.loadUsers(stl.getDbconnection());
+        cicp.load(stl.getDbconnection());
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+	getSqliteDb: function(){
+        return sqliteDbSingleton.getInstance();
+    },
+    getUserControl: function(){
+        return userControl.getInstance();
+    },
+    getHabitsp: function(){
+        return habitsPool.getInstance();
+    },
+    getFriendsp: function(){
+        return friendsPool.getInstance();
+    },
+    getCheckInCommnetsp: function(){
+        return checkinCommnetPool.getInstance();
     }
-};
+}
