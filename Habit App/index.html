@@ -415,7 +415,7 @@
                     for (var i = 0; i < elements.length; i++) {
                         if (elements[i] != "") {
                             var subElements = elements[i].split(":");
-                            requests += "<div class='request'>" + subElements[2] + ' sent a friend request to you.<button type="button" class="btn btn-danger btn-xs pull-right" onclick="respondToRequest(\''+subElements[0]+"\',\'"+subElements[1]+'\', 0">Decline</button> <button type="button" class="btn btn-success btn-xs pull-right" onclick="respondToRequest(\''+subElements[0]+"\',\'"+subElements[1]+'\', 1)">Accept</button></div>';
+                            requests += "<div class='request' id='frequest-" + subElements[0] + "'>" + subElements[2] + ' sent a friend request to you.<button type="button" class="btn btn-danger btn-xs pull-right" onclick="respondToRequest(\''+subElements[0]+"\',\'"+subElements[1]+'\', 0)">Decline</button> <button type="button" class="btn btn-success btn-xs pull-right" onclick="respondToRequest(\''+subElements[0]+"\',\'"+subElements[1]+'\', 1)">Accept</button></div>';
                         }
                     }
                     $("#friend-requests-container").html(requests);
@@ -430,12 +430,11 @@
 			var dataJson = {"acceptOrDecline": acceptOrDeline,"id": id, "userA": userA, "csrf": $("#csrf").val()};
             console.log(dataJson);
             app.getFriendsp().respondtorequest(currentUser,dataJson,app.getSqliteDb().getDbconnection(),function(data) {
+                console.log(data);
                 if (data["status"] == "success") {
-                    console.log("success");
-                    //TODO
+                    $("#frequest-" + id).html("You " + (data["isConfirm"] == true ? 'accepted' : 'declined') + " this friend request.");
                 } else {
-                    console.log(data["content"]);
-                    //TODO
+                    $("#frequest-" + id).html(data["content"]);
                 }
             });
 		}

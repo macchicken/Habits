@@ -296,7 +296,7 @@ var friendsPool = (function () {
                 if (acceptOrDecline=="1"){
                     db.transaction(function (tx) {
                         tx.executeSql("UPDATE friends SET status = ? WHERE id = ? AND userA = ? AND userB = ?",["TRUE",dataJson.id,dataJson.userA,currentUser.ID],function (tx, rs) {
-                            var resultData={"status":"success"};
+                            var resultData={"status":"success","isConfirm":true};
                             successCallback(resultData);
                         },function (tx, e){
                             console.log("Error: " + e.message);
@@ -307,7 +307,7 @@ var friendsPool = (function () {
                 }else{
                     db.transaction(function (tx) {
                         tx.executeSql("DELETE FROM friends WHERE id = ? AND userA = ? AND userB = ?",[dataJson.id,dataJson.userA,currentUser.ID],function (tx, rs) {
-                            var resultData={"status":"success"};
+                            var resultData={"status":"success","isConfirm":false};
                             successCallback(resultData);
                         },function (tx, e){
                             console.log("Error: " + e.message);
