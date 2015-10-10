@@ -57,13 +57,14 @@
 					<ul class="dropdown-menu">
 						<li><a href="javascript:;" onclick="toggleView(this)">New Habit</a></li>
 						<li><a href="javascript:;" onclick="$('.notification-box').modal('show')">Notification</a></li>
+                        <li><a href="javascript:;" onclick="logout()">Logout</a></li>
 					</ul>
 				</li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
   		</div><!-- /.container-fluid -->
 	</nav>
-   <div id="index" class="container">
+    <div id="index" class="container">
 		<div class="row">
 			<div class="col-md-12">
 				<h1 class="text-center">Login</h1>
@@ -145,7 +146,7 @@
 		</div>
 	</div>
 
-    <div id="usercheckinrecords" class="container" style="display:none;">
+    <div id="usercheckinrecords" class="container" style="display:none">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<ul class="list-group">
@@ -291,7 +292,21 @@
                 swal("Good job!", "You have successfully registered!", "success");
             }
 		}
-        
+        function logout(){
+            currentUser==null;
+            $("#index").css("display","block");
+            $("#signup").css("display","none");
+            $("#homeview").css("display","none");
+            $("#navigationbarview").css("display","none");
+            $("#usercheckinrecords").css("display","none");
+            $("#new-habit-container").css("display","none");
+            $("#usercheckinrecords").find("ul").html("");
+            $("#friends-container").html("");
+            $("#friend-requests-container").html("<h5 class='text-center'>Loading...</h5>");
+            $("#habit-requests-container").html("<h5 class='text-center'>Loading...</h5>");
+            $("#habits-container").html("");
+        }
+
 
         //home view js
         function tohomeview(){
@@ -429,19 +444,22 @@
 		function loadHabitRequests() {
             app.getHabitsp().loadhabitrequests(currentUser,app.getSqliteDb().getDbconnection(),function(data) {
                 console.log(data);
-                if (data!==""){
-                    var elements = data.split("=");
-                    var requests = "";
-                    if (elements.length >= 1) {
+                if (data["status"]=="success"){
+                    if (data["content"]!==""){
+                        var elements = data["content"].split("=");
+                        var requestscontent = "";
                         for (var i = 0; i < elements.length; i++) {
                             if (elements[i] != "") {
                                 var subElements = elements[i].split(":");
-                                requests += "<div class='request' habitConent='"+subElements[1]+"' id='request-"+subElements[0]+"'>" + subElements[2] + " sent a habit (" + subElements[1] + ') invitation to you.<button type="button" class="btn btn-danger btn-xs pull-right" onclick="respondToHabit(\''+subElements[0]+'\', false)">Decline</button> <button type="button" class="btn btn-success btn-xs pull-right" onclick="respondToHabit(\''+subElements[0]+'\', true)">Accept</button></div>';
+                                requestscontent += "<div class='request' habitConent='"+subElements[1]+"' id='request-"+subElements[0]+"'>" + subElements[2] + " sent a habit (" + subElements[1] + ') invitation to you.<button type="button" class="btn btn-danger btn-xs pull-right" onclick="respondToHabit(\''+subElements[0]+'\', false)">Decline</button> <button type="button" class="btn btn-success btn-xs pull-right" onclick="respondToHabit(\''+subElements[0]+'\', true)">Accept</button></div>';
                             }
                         }
-                        $("#habit-requests-container").html(requests);}
-                }else {
-                    $("#habit-requests-container").html("<h5 class='text-center'>No habit requests.</h5>");
+                        $("#habit-requests-container").html(requestscontent);
+                    }else {
+                        $("#habit-requests-container").html("<h5 class='text-center'>No habit requests.</h5>");
+                    }
+                }else{
+                    $("#habit-requests-container").html(data["content"]);
                 }
             });
 		}

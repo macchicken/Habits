@@ -77,15 +77,17 @@ var habitsPool = (function () {
                 console.log("habitsPool loadhabitrequests");
                 db.transaction(function (tx) {
                     tx.executeSql("SELECT h.id ID, h.content CONTENT, u.username USERNAME FROM habits h LEFT JOIN users u ON u.id = h.userId WHERE h.friendId = ? AND h.approved = ? ORDER BY h.id DESC",[currentUser.ID,"FALSE"],function (tx, rs) {
-                        console.log(rs.rows.length);
+                        var len=rs.rows.length;
+                        console.log(len);
                         var detailHabits="";
-                        if (rs.rows.length>0){
-                            for (var i=0;i<rs.rows.length;i++){
-                                detailHabits=detailHabits+rs.rows[i].ID+':'+rs.rows[i].CONTENT+':'+rs.rows[i].USERNAME+'=';
+                        if (len>0){
+                            for (var i=0;i<len;i++){
+                                detailHabits=detailHabits+rs.rows.item(i).ID+':'+rs.rows.item(i).CONTENT+':'+rs.rows.item(i).USERNAME+'=';
                             }
                         }
-                        succcessCallback(detailHabits);
-                    },function (tx, e){console.log("Error: " + e.message);});
+                        var resultData={"status":"success","content":detailHabits};
+                        succcessCallback(resultData);
+                    },function (tx, e){ var resultData={"status":"fail","content":e.message};succcessCallback(resultData);console.log("Error: " + e.message);});
                 });
             },
             respondtohabit: function(currentUser,dataJson,db,succcessCallback){

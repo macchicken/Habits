@@ -40,11 +40,10 @@ var app = {
         var uco=userControl.getInstance();
         habitsPool.getInstance();
         friendsPool.getInstance();
-        var cicp=checkinCommnetPool.getInstance();
+        checkinCommnetPool.getInstance();
         stl.openDb();
         stl.createTable();
         uco.loadUsers(stl.getDbconnection());
-        cicp.load(stl.getDbconnection());
     },
 	getSqliteDb: function(){
         return sqliteDbSingleton.getInstance();
