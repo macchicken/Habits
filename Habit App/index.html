@@ -299,7 +299,14 @@
             $("#homeview").css("display","none");
             $("#navigationbarview").css("display","none");
             $("#usercheckinrecords").css("display","none");
-            $("#new-habit-container").css("display","none");
+            var temp=$("#navbar-username").next().find("li:first-child");
+            if (temp.text()=="Dismiss New Habit"){
+                $("#new-habit-container").fadeOut(500);
+                setTimeout(function() {
+					$("#habits-outter-container").removeClass("col-md-4").addClass("col-md-8");
+					temp.text("New Habit");
+				}, 1000);
+            }
             $("#usercheckinrecords").find("ul").html("");
             $("#friends-container").html("");
             $("#friend-requests-container").html("<h5 class='text-center'>Loading...</h5>");
