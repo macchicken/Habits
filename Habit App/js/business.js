@@ -63,11 +63,11 @@ var habitsPool = (function () {
                 sqliteDb.transaction(function (tx) {
                     var habitId=UUID.genV1().toString().split('-').join('');
                     if (currentUser.ID==habitData.friendId||habitData.friendId==null||habitData.friendId==undefined){
-                            tx.executeSql("INSERT INTO habits(ID,USERID,CONTENT,PROGRESS,FRIENDID,FRIENDPROGRESS,LASTUPDATED,FRIENDLASTUPDATED,APPROVED) VALUES(?,?,?,?,?,?,?,?,?)",[habitId,currentUser.ID,habitData.content,1,currentUser.ID,1,habitData.lastUpdated,habitData.lastUpdated,"TRUE"],function (tx, r) {
+                            tx.executeSql("INSERT INTO habits(ID,USERID,CONTENT,PROGRESS,FRIENDID,FRIENDPROGRESS,LASTUPDATED,FRIENDLASTUPDATED,APPROVED) VALUES(?,?,?,?,?,?,?,?,?)",[habitId,currentUser.ID,habitData.content,1,currentUser.ID,1,"","","TRUE"],function (tx, r) {
                             succcessCallback(habitId+':'+habitData.content+':'+'1');
                         }, function (tx, e){console.log("Error: " + e.message);});
                     }else{
-                        tx.executeSql("INSERT INTO habits(ID,USERID,CONTENT,PROGRESS,FRIENDID,FRIENDPROGRESS,LASTUPDATED,FRIENDLASTUPDATED,APPROVED) VALUES(?,?,?,?,?,?,?,?,?)",[habitId,currentUser.ID,habitData.content,1,habitData.friendId,0,habitData.lastUpdated,"","FALSE"],function (tx, r) {
+                        tx.executeSql("INSERT INTO habits(ID,USERID,CONTENT,PROGRESS,FRIENDID,FRIENDPROGRESS,LASTUPDATED,FRIENDLASTUPDATED,APPROVED) VALUES(?,?,?,?,?,?,?,?,?)",[habitId,currentUser.ID,habitData.content,1,habitData.friendId,0,"","","FALSE"],function (tx, r) {
                             succcessCallback(habitId+':'+habitData.content+':'+'1');
                         }, function (tx, e){console.log("Error: " + e.message);});
                     }

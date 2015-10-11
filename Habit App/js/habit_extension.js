@@ -21,7 +21,7 @@ var sqliteDbSingleton = (function () {
                 db.transaction(function (tx) {
                     tx.executeSql("CREATE TABLE IF NOT EXISTS checkins(ID TEXT primary key,USERID TEXT,HABITID TEXT,CONTENT TEXT,INSERTEDTIME TEXT)", [], function (tx, tr) {}, function (tx, e){console.log("Error: " + e.message);});
                     tx.executeSql("CREATE TABLE IF NOT EXISTS friends(ID TEXT primary key,USERA TEXT,USERB TEXT,STATUS TEXT)", [], function (tx, tr) {}, function (tx, e){console.log("Error: " + e.message);});
-                    tx.executeSql("CREATE TABLE IF NOT EXISTS habits(ID TEXT primary key,USERID TEXT,CONTENT TEXT,PROGRESS INTEGER,FRIENDID TEXT,FRIENDPROGRESS INTEGER,LASTUPDATED TEXT,FRIENDLASTUPDATED TEXTT,APPROVED TEXT)", [], function (tx, tr) {}, function (tx, e){console.log("Error: " + e.message);});
+                    tx.executeSql("CREATE TABLE IF NOT EXISTS habits(ID TEXT primary key,USERID TEXT,CONTENT TEXT,PROGRESS INTEGER,FRIENDID TEXT,FRIENDPROGRESS INTEGER,LASTUPDATED TEXT,FRIENDLASTUPDATED TEXT,APPROVED TEXT)", [], function (tx, tr) {}, function (tx, e){console.log("Error: " + e.message);});
                     tx.executeSql("CREATE TABLE IF NOT EXISTS users(ID TEXT primary key,EMAIL TEXT,USERNAME TEXT,PASSWORD TEXT,STATUS TEXT)", [], function (tx, tr) {}, function (tx, e){console.log("Error: " + e.message);});
                 });
             },
